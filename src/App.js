@@ -29,6 +29,19 @@ class App extends Component {
       leftmidtext: "",
       leftindexfinger: "",
       leftindextext: "",
+      leftthumbfinger: "",
+      leftthumbtext: "",
+      leftlittleedge: "",
+      leftlittleedgetext: "",
+      leftringedge: "",
+      leftringedgetext: "",
+      leftmidedge: "",
+      leftmidedgetext: "",
+      leftindexedge: "",
+      leftindexedgetext: "",
+      leftthumbedge: "",
+      leftthumbedgetext: "",
+
       selected: 'Home'
     };
     // this.captureFile = this.captureFile.bind(this);
@@ -336,6 +349,150 @@ class App extends Component {
       }
       return false;
     }
+      //Left Thumb Finger Capture
+      else if (finger == "leftthumbfinger") {
+        console.log("Reading Left Index finger");
+        try {
+          var res = this.CaptureFinger(quality, timeout);
+          if (res.httpStaus) {
+            if (res.data.ErrorCode === "0") {
+              this.setState({
+                leftthumbfinger: "data:image/bmp;base64," + res.data.BitmapData,
+              });
+              this.setState({ leftthumbtext: this.state.leftthumbfinger });
+              this.setState({ buffer: Buffer(this.state.leftthumbfinger) });
+              console.log("buffer", this.state.buffer);
+  
+              return;
+            }
+          } else {
+            alert(res.err);
+          }
+        } catch (e) {
+          alert(e);
+        }
+        return false;
+      }
+       //Left Edge Little Finger Capture
+       else if (finger == "leftlittleedge") {
+        console.log("Reading Left Index finger");
+        try {
+          var res = this.CaptureFinger(quality, timeout);
+          if (res.httpStaus) {
+            if (res.data.ErrorCode === "0") {
+              this.setState({
+                leftlittleedge: "data:image/bmp;base64," + res.data.BitmapData,
+              });
+              this.setState({ leftlittleedgetext: this.state.leftlittleedge });
+              this.setState({ buffer: Buffer(this.state.leftlittleedge) });
+              console.log("buffer", this.state.buffer);
+  
+              return;
+            }
+          } else {
+            alert(res.err);
+          }
+        } catch (e) {
+          alert(e);
+        }
+        return false;
+      }
+       //Left ring edge Finger Capture
+       else if (finger == "leftringedge") {
+        console.log("Reading Left Index finger");
+        try {
+          var res = this.CaptureFinger(quality, timeout);
+          if (res.httpStaus) {
+            if (res.data.ErrorCode === "0") {
+              this.setState({
+                leftringedge: "data:image/bmp;base64," + res.data.BitmapData,
+              });
+              this.setState({ leftringedgetext: this.state.leftringedge });
+              this.setState({ buffer: Buffer(this.state.leftringedge) });
+              console.log("buffer", this.state.buffer);
+  
+              return;
+            }
+          } else {
+            alert(res.err);
+          }
+        } catch (e) {
+          alert(e);
+        }
+        return false;
+      }
+      //Left middle edge Finger Capture
+      else if (finger == "leftmidedge") {
+        console.log("Reading Left Index finger");
+        try {
+          var res = this.CaptureFinger(quality, timeout);
+          if (res.httpStaus) {
+            if (res.data.ErrorCode === "0") {
+              this.setState({
+                leftmidedge: "data:image/bmp;base64," + res.data.BitmapData,
+              });
+              this.setState({ leftmidedgetext: this.state.leftmidedge });
+              this.setState({ buffer: Buffer(this.state.leftmidedge) });
+              console.log("buffer", this.state.buffer);
+  
+              return;
+            }
+          } else {
+            alert(res.err);
+          }
+        } catch (e) {
+          alert(e);
+        }
+        return false;
+      }
+      //Left index edge Finger Capture
+      else if (finger == "leftindexedge") {
+        console.log("Reading Left Index finger");
+        try {
+          var res = this.CaptureFinger(quality, timeout);
+          if (res.httpStaus) {
+            if (res.data.ErrorCode === "0") {
+              this.setState({
+                leftindexedge: "data:image/bmp;base64," + res.data.BitmapData,
+              });
+              this.setState({ leftindexedgetext: this.state.leftindexedge });
+              this.setState({ buffer: Buffer(this.state.leftindexedge) });
+              console.log("buffer", this.state.buffer);
+  
+              return;
+            }
+          } else {
+            alert(res.err);
+          }
+        } catch (e) {
+          alert(e);
+        }
+        return false;
+      }
+      //Left thumb edge Finger Capture
+      else if (finger == "leftthumbedge") {
+        console.log("Reading Left Index finger");
+        try {
+          var res = this.CaptureFinger(quality, timeout);
+          if (res.httpStaus) {
+            if (res.data.ErrorCode === "0") {
+              this.setState({
+                leftthumbedge: "data:image/bmp;base64," + res.data.BitmapData,
+              });
+              this.setState({ leftthumbedgetext: this.state.leftthumbedge });
+              this.setState({ buffer: Buffer(this.state.leftthumbedge) });
+              console.log("buffer", this.state.buffer);
+  
+              return;
+            }
+          } else {
+            alert(res.err);
+          }
+        } catch (e) {
+          alert(e);
+        }
+        return false;
+      }
 
   }
 
@@ -343,7 +500,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App mt-4">
-          <TabNav tabs={['Home', 'Settings', 'Profile']} selected={this.state.selected} setSelected={this.setSelected}>
+          <TabNav tabs={['Home', 'Personal Information', 'Left Biometrics', 'Right Biometrics', 'Preview']} selected={this.state.selected} setSelected={this.setSelected}>
             <Tab isSelected={this.state.selected === 'Home'}>
               <br></br><br></br>
               <table class="search">
@@ -352,12 +509,13 @@ class App extends Component {
                     <label id="labeldes">Search </label>
                   </td>
                   <td>
-                    <select id="searchbydetails" name="country">
-                      <option value="australia">Name</option>
-                      <option value="canada">Age</option>
-                      <option value="usa">Sex</option>
-                      <option value="usa">State</option>
-                      <option value="usa">Type of Growth Pattern</option>
+                    <select id="searchbydetails" name="search">
+                      <option value="none">Select</option>
+                      <option value="name">Name</option>
+                      <option value="age">Age</option>
+                      <option value="sex">Sex</option>
+                      <option value="state">State</option>
+                      <option value="growth">Type of Growth Pattern</option>
                     </select>
                   </td>
                 </tr>
@@ -390,74 +548,682 @@ class App extends Component {
                         <td>Data Not Available</td>
                         <td>Data Not Available</td>
                       </tr>
+                      <tr>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                      </tr>
+                      <tr>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                      </tr>
+                      <tr>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                      </tr>
+                      <tr>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                        <td>Data Not Available</td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
               <button id="addparticipant">Add Participant&nbsp;&nbsp;<BsFillPersonPlusFill /></button>
             </Tab>
-            <Tab isSelected={this.state.selected === 'Settings'}>
-              <h1>More test text</h1>
+
+            <Tab isSelected={this.state.selected === 'Personal Information'}>
+              <form>
+                <br></br><br></br>
+                <table bgcolor="white" border="0" cellpadding="10" cellspacing="0" id="header-fixed" width="100%" class="personaltable">
+                  <tr>
+                    <td>
+                      <label id="infolabel">Name </label>
+                    </td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <label id="infolabel">Age </label>
+                    </td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <label id="infolabel">Gender </label>
+                    </td>
+                    <td>
+                      <select id="gender" name="gender">
+                        <option value="none">Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                      <br></br>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <label id="infolabel">Address </label>
+                    </td>
+                    <td>
+                      <input id="address" type="text" />
+                    </td>
+
+                  </tr>
+                  <br></br>
+                  <tr>
+                    <td>
+                      <label id="infolabel">State </label>
+                    </td>
+                    <td>
+                      <input type="text" />
+                    </td>
+                  </tr>
+
+                </table>
+              </form>
             </Tab>
-            <Tab isSelected={this.state.selected === 'Profile'}>
-              <ul>
-                <li>List test 1</li>
-                <li>List test 2</li>
-                <li>List test 3</li>
-              </ul>
+{/* ********************************************Left Biometrics********************************************************************************************            */}
+           
+            <Tab isSelected={this.state.selected === 'Left Biometrics'}>
+              {/* Left Biometrics */}<br></br>
+              <h2>LEFT FINGERPRINTS</h2><br></br>
+              <table class="leftfintable" width="100%">
+
+                <tr>
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftlittlefinger}
+                        id="fingerprint"
+                        alt="Left Little Finger"
+                      /></div>
+                    &nbsp;
+                    <center>  <input type="text" value={this.state.leftlittletext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftlittlefinger")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftringfinger}
+                        id="fingerprint"
+                        alt="Left Ring Finger"
+                      /></div>
+                    &nbsp;
+                    <center><input type="text" value={this.state.leftringtext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftringfinger")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftmidfinger}
+                        id="fingerprint"
+                        alt="Left Middle Finger"
+                      /></div>
+                    &nbsp;
+                    <center><input type="text" value={this.state.leftmidtext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftmidfinger")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftindexfinger}
+                        id="fingerprint"
+                        alt="Left Index Finger"
+                      /></div>
+                    &nbsp;
+                    <center> <input type="text" value={this.state.leftindextext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftindexfinger")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftthumbfinger}
+                        id="fingerprint"
+                        alt="Left Thumb Finger"
+                      /></div>
+                    &nbsp;
+                    <center> <input type="text" value={this.state.leftthumbtext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftthumbfinger")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+                </tr>
 
 
-              <img
-                src={this.state.leftlittlefinger}
-                id="fingerprint"
-                alt="Capture Fingerprint"
-              />
-              &nbsp;
-              <input type="text" value={this.state.leftlittletext} />
-              <input
-                type="button"
-                onClick={() => this.Capture("leftlittlefinger")}
-                value="Capture"
-              />
-              <h2>Left little Finger</h2>
-              <img
-                src={this.state.leftringfinger}
-                id="fingerprint"
-                alt="Capture Fingerprint"
-              />
-              <input type="text" value={this.state.leftringtext} />
-              <input
-                type="button"
-                onClick={() => this.Capture("leftringfinger")}
-                value="Capture"
-              />
-              <h2>Left ring Finger</h2>
+              </table>
 
-              <img
-                src={this.state.leftmidfinger}
-                id="fingerprint"
-                alt="Capture Fingerprint"
-              />
-              <input type="text" value={this.state.leftmidtext} />
-              <input
-                type="button"
-                onClick={() => this.Capture("leftmidfinger")}
-                value="Capture"
-              />
-              <h2>Left Middle Finger</h2>
+              {/* ------------------------------------------------------------------------------------------------------------------------ */}
+              <br></br><br></br>
+              <hr></hr>
+              <br></br><br></br>
+              <table class="leftfintable" width="100%">
 
-              <img
-                src={this.state.leftindexfinger}
-                id="fingerprint"
-                alt="Capture Fingerprint"
-              />
-              <input type="text" value={this.state.leftindextext} />
-              <input
-                type="button"
-                onClick={() => this.Capture("leftindexfinger")}
-                value="Capture"
-              />
-              <h2>Left Index Finger</h2>
+                <tr>
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftlittleedge}
+                        id="fingerprint"
+                        alt="Left Little edges"
+                      /></div>
+                    &nbsp;
+                    <center>  <input type="text" value={this.state.leftlittleedgetext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftlittleedge")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftringedge}
+                        id="fingerprint"
+                        alt="Left Ring Edge"
+                      /></div>
+                    &nbsp;
+                    <center><input type="text" value={this.state.leftringedgetext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftringedge")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftmidedge}
+                        id="fingerprint"
+                        alt="Left Middle Edge"
+                      /></div>
+                    &nbsp;
+                    <center><input type="text" value={this.state.leftmidedgetext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftmidedge")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftindexedge}
+                        id="fingerprint"
+                        alt="Left Index Edge"
+                      /></div>
+                    &nbsp;
+                    <center> <input type="text" value={this.state.leftindexedgetext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftindexedge")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftthumbedge}
+                        id="fingerprint"
+                        alt="Left Thumb Edge"
+                      /></div>
+                    &nbsp;
+                    <center> <input type="text" value={this.state.leftthumbedgetext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftthumbedge")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+                </tr>
+              </table><br></br><br></br>
+            </Tab>
+            {/* **************************
+
+                          Right FingerPrints
+
+                        ************************** */}
+
+            <Tab isSelected={this.state.selected === 'Right Biometrics'}>
+              {/* Right Biometrics */}<br></br>
+              <h2>RIGHT FINGERPRINTS</h2><br></br>
+              <table class="leftfintable" width="100%">
+
+                <tr>
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftlittlefinger}
+                        id="fingerprint"
+                        alt="Capture Fingerprint"
+                      /></div>
+                    &nbsp;
+                    <center>  <input type="text" value={this.state.leftlittletext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftlittlefinger")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftlittlefinger}
+                        id="fingerprint"
+                        alt="Capture Fingerprint"
+                      /></div>
+                    &nbsp;
+                    <center><input type="text" value={this.state.leftlittletext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftlittlefinger")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftlittlefinger}
+                        id="fingerprint"
+                        alt="Capture Fingerprint"
+                      /></div>
+                    &nbsp;
+                    <center><input type="text" value={this.state.leftlittletext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftlittlefinger")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftlittlefinger}
+                        id="fingerprint"
+                        alt="Capture Fingerprint"
+                      /></div>
+                    &nbsp;
+                    <center> <input type="text" value={this.state.leftlittletext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftlittlefinger")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+
+                  <td>
+                    <div class="zoom">
+                      <img
+                        src={this.state.leftlittlefinger}
+                        id="fingerprint"
+                        alt="Capture Fingerprint"
+                      /></div>
+                    &nbsp;
+                    <center> <input type="text" value={this.state.leftlittletext} /></center>
+                    <br></br>
+                    <input
+                      type="button"
+                      onClick={() => this.Capture("leftlittlefinger")}
+                      value="Capture"
+                    /><br></br>
+                    &nbsp;
+                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                  </td>
+                </tr>
+
+
+              </table>
+
+
+            </Tab>
+
+{/* ********************** Preview ****************************** */}
+
+            <Tab isSelected={this.state.selected === 'Preview'}>
+              <br></br>
+              <h2>PREVIEW</h2><br></br>
+              <br></br>
+              <center>
+                <table width="90%" >
+                  <tr>
+                    <td>
+
+                      <label id=" ">Name </label>
+                      <input type="text" />
+                    </td>
+
+                    <td>
+                      <label id=" ">Age </label>
+                      <input type="text" />
+                    </td>
+
+                    <td>
+                      <label id=" ">Gender </label>
+                      <input type="text" />
+                    </td>
+
+                    <td>
+                      <label id=" ">Address </label>
+                      <input type="text" />
+                    </td>
+
+
+                    <td>
+                      <label id=" ">State </label>
+                      <input type="text" />
+                    </td>
+
+                    <td>
+                      <label id=" ">Type of Growth </label>
+                      <select id="tfg" name="tfg">
+                        <option value="none">Select</option>
+                        <option value="Male">Average</option>
+                        <option value="Female">Horizonta</option>
+                        <option value="Other">Vertical</option>
+                      </select>
+                    </td>
+                  </tr>
+                </table>
+              </center>
+              <br></br>
+              <h3>LEFT FINGERPRINTS</h3> <br></br>
+
+              <table width="100%" border="1" >
+                <tr>
+                  <th>LEFT FINGERS</th>
+                  <th>RIGHT FINGERS</th>
+                </tr>
+                <tr height="230px">
+                  <td>
+                    <table width="100%" >
+                      <tr>
+                        <td>
+                          <img
+                            src={this.state.leftlittlefinger}
+                            id="fingerprint"
+                            alt="Left Thumb Finger"
+                          />
+                        </td>
+                        <td>
+                        <center> <label id=" ">LEFT THUMB FINGER </label>
+                          <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                        </td>
+                      </tr>
+                    </table>
+
+                  </td>
+                  <td>
+                    <table width="100%" >
+                      <tr>
+                        <td>
+                        <img
+                            src={this.state.leftlittlefinger}
+                            id="fingerprint"
+                            alt="Right Thumb finger"
+                          /> 
+                        </td>
+                        <td>
+                      <center> <label id=" ">RIGHT THUMB FINGER </label>
+                          <input id="previewdesc" type="text" placeholder="Description..."></input></center> 
+
+                        </td>
+                      </tr>
+                    </table>
+
+                  </td>
+                </tr>
+
+                <tr height="230px">
+                  <td>
+                    <table width="100%" >
+                      <tr>
+                        <td>
+                          <img
+                            src={this.state.leftlittlefinger}
+                            id="fingerprint"
+                            alt="Left Index Finger"
+                          />
+                        </td>
+                        <td>
+                        <center> <label id=" ">LEFT INDEX FINGER </label>
+                          <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                        </td>
+                      </tr>
+                    </table>
+
+                  </td>
+                  <td>
+                    <table width="100%" >
+                      <tr>
+                        <td>
+                          <img
+                            src={this.state.leftlittlefinger}
+                            id="fingerprint"
+                            alt="Right Index Finger"
+                          />
+                        </td>
+                        <td>
+                        <center> <label id=" ">RIGHT INDEX FINGER </label>
+                          <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                        </td>
+                      </tr>
+                    </table>
+
+                  </td>
+                </tr>
+
+
+                <tr height="230px">
+                  <td>
+                    <table width="100%" >
+                      <tr>
+                        <td>
+                        <img
+                      src={this.state.leftlittlefinger}
+                      id="fingerprint"
+                      alt="Left Mid Finger"
+                    />
+                        </td>
+                        <td>
+                        <center> <label id=" ">LEFT MIDDLE FINGER</label>
+                          <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                        </td>
+                      </tr>
+                    </table>
+                   
+                  </td>
+                  <td>
+                    <table width="100%" >
+                      <tr>
+                        <td>
+                        <img
+                      src={this.state.leftlittlefinger}
+                      id="fingerprint"
+                      alt="Right Mid Finger"
+                    />
+                        </td>
+                        <td>
+                        <center> <label id=" ">RIGHT MIDDLE FINGER </label>
+                          <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                        </td>
+                      </tr>
+                    </table>
+                   
+                  </td>
+                </tr>
+
+
+                <tr height="230px">
+                  <td>
+                    <table width="100%" >
+                      <tr>
+                        <td>
+                        <img
+                      src={this.state.leftlittlefinger}
+                      id="fingerprint"
+                      alt="Left Ring Finger"
+                    />
+                        </td>
+                        <td>
+                        <center> <label id=" ">LEFT RING FINGER </label>
+                          <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                        </td>
+                      </tr>
+                    </table>
+                   
+                  </td>
+                  <td>
+                    <table width="100%" >
+                      <tr>
+                        <td>
+                        <img
+                      src={this.state.leftlittlefinger}
+                      id="fingerprint"
+                      alt="Right Ring Finger"
+                    />
+                        </td>
+                        <td>
+                        <center> <label id=" ">RIGHT RING FINGER </label>
+                          <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                        </td>
+                      </tr>
+                    </table>
+                   
+                  </td>
+                </tr>
+
+
+                <tr height="230px">
+                  <td>
+                    <table width="100%" >
+                      <tr>
+                        <td>
+                        <img
+                      src={this.state.leftlittlefinger}
+                      id="fingerprint"
+                      alt="Left Little Finger"
+                    />
+                        </td>
+                        <td>
+                        <center> <label id=" ">LEFT LITTLE FINGER </label>
+                          <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                        </td>
+                      </tr>
+                    </table>
+                   
+                  </td>
+                  <td>
+                    <table width="100%" >
+                      <tr height="150px">
+                        <td>
+                        <img
+                      src={this.state.leftlittlefinger}
+                      id="fingerprint"
+                      alt="Right Little Finger"
+                    />
+                        </td>
+                        <td>
+                        <center> <label id=" ">RIGHT LITTLE FINGER </label>
+                          <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                        </td>
+                      </tr>
+                    </table>
+                   
+                  </td>
+                </tr>
+
+                
+              </table>
             </Tab>
           </TabNav>
         </div>
