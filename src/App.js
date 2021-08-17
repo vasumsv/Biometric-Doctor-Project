@@ -6,6 +6,9 @@ import TabNav from './component/tabnav.js';
 import Tab from './component/tab.js';
 import './App.css';
 import { BsFillPersonPlusFill } from "react-icons/bs";
+ 
+
+
 
 
 var quality = 60;
@@ -14,6 +17,9 @@ var uri = "https://localhost:8003/mfs100/"; //Secure
 var KeyFlag = "";
 var isGetSuccess = false;
 let thrownError = "";
+
+ 
+
 
 class App extends Component {
 
@@ -129,6 +135,7 @@ class App extends Component {
 
     // this.onSubmit = this.onSubmit.bind(this);
   }
+  
   setSelected = (tab) => {
     this.setState({ selected: tab });
   }
@@ -136,6 +143,22 @@ class App extends Component {
     KeyFlag = "";
     return this.GetMFS100Client("info");
   }
+  
+   printDiv(divName){
+    var printContents = document.getElementById(divName).innerHTML;
+    var previeword=document.getElementById(previeword);
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+
+    window.print();
+
+    document.body.innerHTML = originalContents;
+
+  }
+
+
+
 
   GetMFS100KeyInfo(key) {
     KeyFlag = key;
@@ -1224,10 +1247,13 @@ class App extends Component {
     this.state.rightthumbleftedgepreview = rightthumbleftedgedesc;
   }
 
+
+  
   render() {
     return (
       <div className="App">
         <div className="App mt-4">
+          <h1 id="heading">BIOMETRIC PROJECT</h1><br></br>
           <TabNav tabs={['Home', 'Personal Information', 'Left Biometrics', 'Right Biometrics', 'Preview']} selected={this.state.selected} setSelected={this.setSelected}>
             <Tab isSelected={this.state.selected === 'Home'}>
               <br></br><br></br>
@@ -1248,6 +1274,8 @@ class App extends Component {
                   </td>
                 </tr>
               </table>
+
+               
 
               <div id="table-wrapper">
                 <div id="table-scroll">
@@ -1306,6 +1334,7 @@ class App extends Component {
                       </tr>
                     </tbody>
                   </table>
+                  
                 </div>
               </div>
               <button id="addparticipant">Add Participant&nbsp;&nbsp;<BsFillPersonPlusFill /></button>
@@ -1314,6 +1343,7 @@ class App extends Component {
             {/* *************************************************PERSONAL INFORMATION**************************************************************** */}
 
             <Tab isSelected={this.state.selected === 'Personal Information'}>
+              
               <form>
                 <br></br><br></br>
                 <table bgcolor="white" border="0" cellpadding="10" cellspacing="0" id="header-fixed" width="100%" class="personaltable">
@@ -2039,9 +2069,13 @@ class App extends Component {
 
             {/* ********************** Preview ****************************** */}
 
-            <Tab isSelected={this.state.selected === 'Preview'}>
+            <Tab isSelected={this.state.selected === 'Preview'} >
+              <div id='printMe'>
               <br></br>
-              <h2>PREVIEW</h2><br></br>
+              {/* <button onclick="printDiv('printMe')">Print </button> */}
+              <button onClick={() => this.printDiv('printMe')}>Print </button>
+ 
+              <h2 id="previeword">PREVIEW</h2><br></br>
               <br></br>
               <center>
                 <table width="90%" >
@@ -2709,6 +2743,7 @@ class App extends Component {
 
 
               </table>
+              </div>
             </Tab>
           </TabNav>
         </div>

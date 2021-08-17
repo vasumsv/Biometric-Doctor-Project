@@ -205,14 +205,16 @@ input[type="text"] {
   width: 50%;
   margin-top: 20px;
   position: absolute;
-  top: 75px;
+  top: 150px;
   z-index: 5;
   height: 250px;
   align-content: center;
   margin-left: 65px;
    
 }
-
+#heading{
+color:rgb(0, 99, 180);
+}
 .previewtextfield{
   border-radius: 15%;
   align-items: left;
