@@ -43,7 +43,7 @@ th{
   transform: translateX(-50%);
 }
 
-#fingerdesc{
+.fingerdesc{
   height:80px;
   width:230px;
 }

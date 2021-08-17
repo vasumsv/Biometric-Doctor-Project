@@ -6,7 +6,7 @@ import TabNav from './component/tabnav.js';
 import Tab from './component/tab.js';
 import './App.css';
 import { BsFillPersonPlusFill } from "react-icons/bs";
- 
+
 
 var quality = 60;
 var timeout = 10;
@@ -42,16 +42,50 @@ class App extends Component {
       leftthumbedge: "",
       leftthumbedgetext: "",
       // left fingers right edges
-      leftlittlerightedge:"",
-      leftlittlerightedgetext:"",
-      leftindexrightedge:"",
-      leftindexrightedgetext:"",
-      leftmidrightedge:"",
-      leftmidrightedgetext:"",
-      leftringrightedge:"",
-      leftringrightedgetext:"",
-      leftthumbrightedge:"",
-      leftthumbrightedgetext:"",
+      leftlittlerightedge: "",
+      leftlittlerightedgetext: "",
+      leftindexrightedge: "",
+      leftindexrightedgetext: "",
+      leftmidrightedge: "",
+      leftmidrightedgetext: "",
+      leftringrightedge: "",
+      leftringrightedgetext: "",
+      leftthumbrightedge: "",
+      leftthumbrightedgetext: "",
+      //left description
+      leftthumbfingerpreview: "",
+      rightthumbfingerpreview: "",
+      leftindexfingerpreview: "",
+      rightindexfingerpreview: "",
+      leftmidfingerpreview: "",
+      rightmiddlefingerpreview: "",
+      leftringfingerpreview: "",
+      rightringfingerpreview: "",
+      leftlittlefingerpreview: "",
+      rightlittlefingerpreview: "",
+
+      lefthumbleftedgepreview: "",
+      rightthumbrightedgepreview: "",
+      leftindexleftedgepreview: "",
+      rightindexrightedgepreview: "",
+      leftmiddleleftedgepreview: "",
+      rightmiddlerightedgepreview: "",
+      leftringleftedgepreview: "",
+      rightringrightedgepreview: "",
+      leftlittleleftedgepreview: "",
+      rightlittlerightedgepreview: "",
+
+      leftlittlerightedgepreview: "",
+      rightlittleleftedgepreview: "",
+      leftindexrightedgepreview: "",
+      rightindexleftedgepreview: "",
+      leftmidrightedgepreview: "",
+      rightmidleftedgepreview: "",
+      leftringrightedgepreview: "",
+      rightringleftedgepreview: "",
+      leftthumbrightedgepreview: "",
+      rightthumbleftedgepreview: "",
+
       // right fingers and edges
       rightlittlefinger: "",
       rightlittletext: "",
@@ -73,22 +107,22 @@ class App extends Component {
       rightindexedgetext: "",
       rightthumbedge: "",
       rightthumbedgetext: "",
-      previewname:"",
-      previewage:"",
-      previewgender:"",
-      previewaddress:"",
-      previewstate:"",
+      previewname: "",
+      previewage: "",
+      previewgender: "",
+      previewaddress: "",
+      previewstate: "",
       // Right fingers right edges
-      rightlittleleftedge:"",
-      rightlittleleftedgetext:"",
-      rightindexleftedge:"",
-      rightindexleftedgetext:"",
-      rightmidleftedge:"",
-      rightmidleftedgetext:"",
-      rightringleftedge:"",
-      rightringleftedgetext:"",
-      rightthumbleftedge:"",
-      rightthumbleftedgetext:"",
+      rightlittleleftedge: "",
+      rightlittleleftedgetext: "",
+      rightindexleftedge: "",
+      rightindexleftedgetext: "",
+      rightmidleftedge: "",
+      rightmidleftedgetext: "",
+      rightringleftedge: "",
+      rightringleftedgetext: "",
+      rightthumbleftedge: "",
+      rightthumbleftedgetext: "",
       selected: 'Home'
     };
     // this.captureFile = this.captureFile.bind(this);
@@ -301,7 +335,7 @@ class App extends Component {
 
   Capture(finger) {
     //Left Ring finger Capture
-    if (finger ==="leftringfinger") {
+    if (finger === "leftringfinger") {
       console.log("Reading Left Ring Finger");
       try {
         var res = this.CaptureFinger(quality, timeout);
@@ -907,8 +941,8 @@ class App extends Component {
     }
 
 
-     //Right  Little Left edge finger
-     else if (finger === "rightlittleleftedge") {
+    //Right  Little Left edge finger
+    else if (finger === "rightlittleleftedge") {
       console.log("Reading Left Index finger");
       try {
         var res = this.CaptureFinger(quality, timeout);
@@ -932,8 +966,8 @@ class App extends Component {
       return false;
     }
 
-     //Right  index Left edge finger
-     else if (finger === "rightindexleftedge") {
+    //Right  index Left edge finger
+    else if (finger === "rightindexleftedge") {
       console.log("Reading Left Index finger");
       try {
         var res = this.CaptureFinger(quality, timeout);
@@ -957,8 +991,8 @@ class App extends Component {
       return false;
     }
 
-     //Right  Middle Left edge finger
-     else if (finger === "rightmidleftedge") {
+    //Right  Middle Left edge finger
+    else if (finger === "rightmidleftedge") {
       console.log("Reading Left Index finger");
       try {
         var res = this.CaptureFinger(quality, timeout);
@@ -983,8 +1017,8 @@ class App extends Component {
     }
 
 
-     //Right  Ring Left edge finger
-     else if (finger === "rightringleftedge") {
+    //Right  Ring Left edge finger
+    else if (finger === "rightringleftedge") {
       console.log("Reading Left Index finger");
       try {
         var res = this.CaptureFinger(quality, timeout);
@@ -1035,7 +1069,7 @@ class App extends Component {
     }
 
   }
-  
+
 
   detailsnext() {
     var name = document.getElementById("name").value;
@@ -1049,13 +1083,146 @@ class App extends Component {
     var state = document.getElementById("state").value;
     console.log(state);
 
-     
+
     this.state.previewname = name;
     this.state.previewage = age;
     this.state.previewgender = gender;
     this.state.previewaddress = address;
     this.state.previewstate = state;
-   }
+  }
+
+  detailsnext() {
+    var name = document.getElementById("name").value;
+    console.log(name);
+    var age = document.getElementById("age").value;
+    console.log(age);
+    var gender = document.getElementById("gender").value;
+    console.log(gender);
+    var address = document.getElementById("address").value;
+    console.log(address);
+    var state = document.getElementById("state").value;
+    console.log(state);
+
+
+    this.state.previewname = name;
+    this.state.previewage = age;
+    this.state.previewgender = gender;
+    this.state.previewaddress = address;
+    this.state.previewstate = state;
+  }
+
+  saveleft() {
+    var leftlittlefingerdesc = document.getElementById("leftlittlefingerdesc").value;
+    console.log(leftlittlefingerdesc);
+    var leftringfingerdesc = document.getElementById("leftringfingerdesc").value;
+    console.log(leftringfingerdesc);
+    var leftmiddlefingerdesc = document.getElementById("leftmiddlefingerdesc").value;
+    console.log(leftmiddlefingerdesc);
+    var leftindexfingerdesc = document.getElementById("leftindexfingerdesc").value;
+    console.log(leftindexfingerdesc);
+    var leftthumbfingerdesc = document.getElementById("leftthumbfingerdesc").value;
+    console.log(leftthumbfingerdesc);
+
+    var leftlittleleftedgedesc = document.getElementById("leftlittleleftedgedesc").value;
+    console.log(leftlittleleftedgedesc);
+    var leftringleftedgedesc = document.getElementById("leftringleftedgedesc").value;
+    console.log(leftringleftedgedesc);
+    var leftmiddleleftedgedesc = document.getElementById("leftmiddleleftedgedesc").value;
+    console.log(leftmiddleleftedgedesc);
+    var leftindexleftedgedesc = document.getElementById("leftindexleftedgedesc").value;
+    console.log(leftindexleftedgedesc);
+    var leftthumbleftedgedesc = document.getElementById("leftthumbleftedgedesc").value;
+    console.log(leftthumbleftedgedesc);
+
+    var leftlittlerightedgedesc = document.getElementById("leftlittlerightedgedesc").value;
+    console.log(leftlittlerightedgedesc);
+    var leftindexrightedgedesc = document.getElementById("leftindexrightedgedesc").value;
+    console.log(leftindexrightedgedesc);
+    var leftmiddlerightedgedesc = document.getElementById("leftmiddlerightedgedesc").value;
+    console.log(leftmiddlerightedgedesc);
+    var leftringrightedgedesc = document.getElementById("leftringrightedgedesc").value;
+    console.log(leftringrightedgedesc);
+    var leftthumbrightedgedesc = document.getElementById("leftthumbrightedgedesc").value;
+    console.log(leftthumbrightedgedesc);
+
+    this.state.leftthumbfingerpreview = leftthumbfingerdesc;
+    this.state.leftindexfingerpreview = leftindexfingerdesc;
+    this.state.leftmidfingerpreview = leftmiddlefingerdesc;
+    this.state.leftringfingerpreview = leftringfingerdesc;
+    this.state.leftlittlefingerpreview = leftlittlefingerdesc;
+
+
+
+    this.state.lefthumbleftedgepreview = leftthumbleftedgedesc;
+    this.state.leftindexleftedgepreview = leftindexleftedgedesc;
+    this.state.leftmiddleleftedgepreview = leftmiddleleftedgedesc;
+    this.state.leftringleftedgepreview = leftringleftedgedesc;
+    this.state.leftlittleleftedgepreview = leftlittleleftedgedesc;
+
+    this.state.leftlittlerightedgepreview = leftlittlerightedgedesc;
+    this.state.leftindexrightedgepreview = leftindexrightedgedesc;
+    this.state.leftmidrightedgepreview = leftmiddlerightedgedesc;
+    this.state.leftringrightedgepreview = leftringrightedgedesc;
+    this.state.leftthumbrightedgepreview = leftthumbrightedgedesc;
+
+
+  }
+
+  saveright() {
+    var rightlittlefingerdesc = document.getElementById("rightlittlefingerdesc").value;
+    console.log(rightlittlefingerdesc);
+    var rightringfingerdesc = document.getElementById("rightringfingerdesc").value;
+    console.log(rightringfingerdesc);
+    var rightmidfingerdesc = document.getElementById("rightmidfingerdesc").value;
+    console.log(rightmidfingerdesc);
+    var rightindexfingerdesc = document.getElementById("rightindexfingerdesc").value;
+    console.log(rightindexfingerdesc);
+    var rightthumbfingerdesc = document.getElementById("rightthumbfingerdesc").value;
+    console.log(rightthumbfingerdesc);
+
+
+    var rightlittlrighteedgedesc = document.getElementById("rightlittlrighteedgedesc").value;
+    console.log(rightlittlrighteedgedesc);
+    var rightringrightedgedesc = document.getElementById("rightringrightedgedesc").value;
+    console.log(rightringrightedgedesc);
+    var rightmidrightedge = document.getElementById("rightmidrightedge").value;
+    console.log(rightmidrightedge);
+    var rightindexrightedges = document.getElementById("rightindexrightedges").value;
+    console.log(rightindexrightedges);
+    var rightthumbrightedge = document.getElementById("rightthumbrightedge").value;
+    console.log(rightthumbrightedge);
+
+
+
+    var rightlittleleftedgedesc = document.getElementById("rightlittleleftedgedesc").value;
+    console.log(rightlittleleftedgedesc);
+    var rightringleftedgedesc = document.getElementById("rightringleftedgedesc").value;
+    console.log(rightringleftedgedesc);
+    var rightmidleftedgedesc = document.getElementById("rightmidleftedgedesc").value;
+    console.log(rightmidleftedgedesc);
+    var rightindexleftedgedesc = document.getElementById("rightindexleftedgedesc").value;
+    console.log(rightindexleftedgedesc);
+    var rightthumbleftedgedesc = document.getElementById("rightthumbleftedgedesc").value;
+    console.log(rightthumbleftedgedesc);
+
+    this.state.rightthumbfingerpreview = rightthumbfingerdesc;
+    this.state.rightindexfingerpreview = rightindexfingerdesc;
+    this.state.rightmiddlefingerpreview = rightmidfingerdesc;
+    this.state.rightringfingerpreview = rightringfingerdesc;
+    this.state.rightlittlefingerpreview = rightlittlefingerdesc;
+
+    this.state.rightthumbrightedgepreview = rightthumbrightedge;
+    this.state.rightindexrightedgepreview = rightindexrightedges;
+    this.state.rightmiddlerightedgepreview = rightmidrightedge;
+    this.state.rightringrightedgepreview = rightringrightedgedesc;
+    this.state.rightlittlerightedgepreview = rightlittlrighteedgedesc;
+
+    this.state.rightlittleleftedgepreview = rightlittleleftedgedesc;
+    this.state.rightindexleftedgepreview = rightindexleftedgedesc;
+    this.state.rightmidleftedgepreview = rightmidleftedgedesc;
+    this.state.rightringleftedgepreview = rightringleftedgedesc;
+    this.state.rightthumbleftedgepreview = rightthumbleftedgedesc;
+  }
 
   render() {
     return (
@@ -1155,7 +1322,7 @@ class App extends Component {
                       <label id="infolabel" >Name </label>
                     </td>
                     <td>
-                      <input type="text" id="name" placeholder="name"/>
+                      <input type="text" id="name" placeholder="name" />
                     </td>
                   </tr>
 
@@ -1164,7 +1331,7 @@ class App extends Component {
                       <label id="infolabel">Age </label>
                     </td>
                     <td>
-                      <input type="text" id="age" placeholder="age"/>
+                      <input type="text" id="age" placeholder="age" />
                     </td>
                   </tr>
 
@@ -1188,7 +1355,7 @@ class App extends Component {
                       <label id="infolabel">Address </label>
                     </td>
                     <td>
-                      <input id="address" type="text" placeholder="address"/>
+                      <input id="address" type="text" placeholder="address" />
                     </td>
 
                   </tr>
@@ -1198,7 +1365,7 @@ class App extends Component {
                       <label id="infolabel">State </label>
                     </td>
                     <td>
-                      <input type="text" id="state" placeholder="state"/>
+                      <input type="text" id="state" placeholder="state" />
                     </td>
                   </tr>
                   <tr>
@@ -1240,7 +1407,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftlittlefingerdesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1259,7 +1426,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftringfingerdesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1278,7 +1445,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftmiddlefingerdesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1297,7 +1464,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftindexfingerdesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1308,7 +1475,7 @@ class App extends Component {
                         alt="Left Thumb Finger"
                       /></div>
                     &nbsp;
-                    <center> <input type="text" value={this.state.leftthumbtext} /></center>
+                    <center> <input  type="text" value={this.state.leftthumbtext} /></center>
                     <br></br>
                     <input
                       type="button"
@@ -1316,15 +1483,14 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftthumbfingerdesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
                 </tr>
 
 
               </table><br></br><br></br>
               <h2>LEFT FINGERPRINTS LEFT EDGES</h2>
-              {/* ------------------------------------------------------------------------------------------------------------------------ */}
-              
+              {/* *********************LEFT FINGER LEFT EDGES ************* */}
               <hr></hr>
               <br></br><br></br>
               <table class="leftfintable" width="100%">
@@ -1335,7 +1501,7 @@ class App extends Component {
                       <img
                         src={this.state.leftlittleedge}
                         id="fingerprint"
-                        alt="Left Little edges"
+                        alt="Left Little Left Edges"
                       /></div>
                     &nbsp;
                     <center>  <input type="text" value={this.state.leftlittleedgetext} /></center>
@@ -1346,7 +1512,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftlittleleftedgedesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1354,7 +1520,7 @@ class App extends Component {
                       <img
                         src={this.state.leftringedge}
                         id="fingerprint"
-                        alt="Left Ring Edge"
+                        alt="Left Ring Left Edge"
                       /></div>
                     &nbsp;
                     <center><input type="text" value={this.state.leftringedgetext} /></center>
@@ -1365,7 +1531,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftringleftedgedesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1373,7 +1539,7 @@ class App extends Component {
                       <img
                         src={this.state.leftmidedge}
                         id="fingerprint"
-                        alt="Left Middle Edge"
+                        alt="Left Middle Left Edge"
                       /></div>
                     &nbsp;
                     <center><input type="text" value={this.state.leftmidedgetext} /></center>
@@ -1384,7 +1550,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftmiddleleftedgedesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1392,7 +1558,7 @@ class App extends Component {
                       <img
                         src={this.state.leftindexedge}
                         id="fingerprint"
-                        alt="Left Index Edge"
+                        alt="Left Index Left Edge"
                       /></div>
                     &nbsp;
                     <center> <input type="text" value={this.state.leftindexedgetext} /></center>
@@ -1403,7 +1569,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftindexleftedgedesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1411,7 +1577,7 @@ class App extends Component {
                       <img
                         src={this.state.leftthumbedge}
                         id="fingerprint"
-                        alt="Left Thumb Edge"
+                        alt="Left Thumb Left Edge"
                       /></div>
                     &nbsp;
                     <center> <input type="text" value={this.state.leftthumbedgetext} /></center>
@@ -1422,14 +1588,14 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftthumbleftedgedesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
                 </tr>
               </table><br></br><br></br>
 
 
-{/* ************************RIGHT EDGES*************** */}
-              <h2>LEFT FINGERPRINTS RIGHT EDGES</h2>              
+              {/* ************************RIGHT EDGES*************** */}
+              <h2>LEFT FINGERPRINTS RIGHT EDGES</h2>
               <hr></hr>
               <br></br><br></br>
               <table class="leftfintable" width="100%">
@@ -1451,7 +1617,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftlittlerightedgedesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1470,7 +1636,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftindexrightedgedesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1489,7 +1655,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftmiddlerightedgedesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1508,7 +1674,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftringrightedgedesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1527,10 +1693,18 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input id="leftthumbrightedgedesc" class="fingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
                 </tr>
-              </table><br></br><br></br>
+              </table><br></br>
+              <br></br>
+              <input
+                type="button"
+                name="save"
+                onClick={() => this.saveleft()}
+                value="Save Left Fingerprints"
+              ></input><br></br>
+              &nbsp;<br></br>
             </Tab>
             {/* **************************
 
@@ -1560,7 +1734,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightlittlefingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1579,7 +1753,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightringfingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1598,7 +1772,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightmidfingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1617,7 +1791,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightindexfingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1636,12 +1810,13 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightthumbfingerdesc" type="text" placeholder="Description..."></input></center>
                   </td>
                 </tr>
 
 
               </table>
+
               {/* ************************Right Fingers edges**************************** */}
               <br></br><br></br>
               <hr></hr>
@@ -1654,7 +1829,7 @@ class App extends Component {
                       <img
                         src={this.state.rightlittleedge}
                         id="fingerprint"
-                        alt="Right Little Edges"
+                        alt="Right Little Right Edges"
                       /></div>
                     &nbsp;
                     <center>  <input type="text" value={this.state.rightlittleedgetext} /></center>
@@ -1665,7 +1840,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightlittlrighteedgedesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1673,7 +1848,7 @@ class App extends Component {
                       <img
                         src={this.state.rightringedge}
                         id="fingerprint"
-                        alt="Right Ring Edges"
+                        alt="Right Ring Right Edges"
                       /></div>
                     &nbsp;
                     <center><input type="text" value={this.state.rightringedgetext} /></center>
@@ -1684,7 +1859,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" type="text" id="rightringrightedgedesc" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1692,7 +1867,7 @@ class App extends Component {
                       <img
                         src={this.state.rightmidedge}
                         id="fingerprint"
-                        alt="Right Mid Edges"
+                        alt="Right Mid Right Edges"
                       /></div>
                     &nbsp;
                     <center><input type="text" value={this.state.rightmidedgetext} /></center>
@@ -1703,7 +1878,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" type="text" id="rightmidrightedge" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1711,7 +1886,7 @@ class App extends Component {
                       <img
                         src={this.state.rightindexedge}
                         id="fingerprint"
-                        alt="Right Index Edges"
+                        alt="Right Index Right Edges"
                       /></div>
                     &nbsp;
                     <center> <input type="text" value={this.state.rightindexedgetext} /></center>
@@ -1722,7 +1897,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" type="text" id="rightindexrightedges" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1730,7 +1905,7 @@ class App extends Component {
                       <img
                         src={this.state.rightthumbedge}
                         id="fingerprint"
-                        alt="Right Thumb Edges"
+                        alt="Right Thumb Right Edges"
                       /></div>
                     &nbsp;
                     <center> <input type="text" value={this.state.rightthumbedgetext} /></center>
@@ -1741,7 +1916,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" type="text" id="rightthumbrightedge" placeholder="Description..."></input></center>
                   </td>
                 </tr>
 
@@ -1772,7 +1947,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightlittleleftedgedesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1791,7 +1966,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightringleftedgedesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1810,7 +1985,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightmidleftedgedesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1829,7 +2004,7 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightindexleftedgedesc" type="text" placeholder="Description..."></input></center>
                   </td>
 
                   <td>
@@ -1848,13 +2023,18 @@ class App extends Component {
                       value="Capture"
                     /><br></br>
                     &nbsp;
-                    <center> <input id="fingerdesc" type="text" placeholder="Description..."></input></center>
+                    <center> <input class="fingerdesc" id="rightthumbleftedgedesc" type="text" placeholder="Description..."></input></center>
                   </td>
                 </tr>
 
 
-              </table>  
-
+              </table>
+              <input
+                type="button"
+                name="save"
+                onClick={() => this.saveright()}
+                value="Save Left Fingerprints"
+              ></input><br></br>
             </Tab>
 
             {/* ********************** Preview ****************************** */}
@@ -1869,34 +2049,34 @@ class App extends Component {
                     <td>
 
                       <label id="">Name </label>
-                      <input  type="text" name="previewname" value={ this.state.previewname} class="previewtextfield" id="previewname" readonly/>
+                      <input type="text" name="previewname" value={this.state.previewname} class="previewtextfield" id="previewname" readonly />
                     </td>
 
                     <td>
                       <label id=" ">Age </label>
-                      <input type="text" class="previewtextfield" value={ this.state.previewage} id="previewage"  />
+                      <input type="text" class="previewtextfield" value={this.state.previewage} id="previewage" />
                     </td>
 
                     <td>
                       <label id=" ">Gender </label>
-                      <input type="text" class="previewtextfield" value={ this.state.previewgender} id="previewgender"  />
+                      <input type="text" class="previewtextfield" value={this.state.previewgender} id="previewgender" />
                     </td>
 
                     <td>
                       <label id=" ">Address </label>
-                      <input type="text" class="previewtextfield" value={ this.state.previewaddress} id="previewaddress"  />
+                      <input type="text" class="previewtextfield" value={this.state.previewaddress} id="previewaddress" />
                     </td>
 
 
                     <td>
                       <label id=" ">State </label>
-                      <input type="text" class="previewtextfield" value={ this.state.previewstate} id="previewstate"  />
+                      <input type="text" class="previewtextfield" value={this.state.previewstate} id="previewstate" />
                     </td>
 
-                   
+
                   </tr>
                   <tr>
-                  <td>
+                    <td>
                       <label id=" ">Type of Growth </label>
                       <select id="tfg" name="tfg">
                         <option value="none">Select</option>
@@ -1929,7 +2109,7 @@ class App extends Component {
                         </td>
                         <td>
                           <center> <label id=" ">LEFT THUMB FINGER </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                            <input id="previewdesc" value={this.state.leftthumbfingerpreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -1947,7 +2127,7 @@ class App extends Component {
                         </td>
                         <td>
                           <center> <label id=" ">RIGHT THUMB FINGER </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                            <input id="previewdesc" value={this.state.rightthumbfingerpreview} type="text" placeholder="Description..."></input></center>
 
                         </td>
                       </tr>
@@ -1969,7 +2149,7 @@ class App extends Component {
                         </td>
                         <td>
                           <center> <label id=" ">LEFT INDEX FINGER </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                            <input id="previewdesc" value={this.state.leftindexfingerpreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -1987,7 +2167,7 @@ class App extends Component {
                         </td>
                         <td>
                           <center> <label id=" ">RIGHT INDEX FINGER </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                            <input id="previewdesc" type="text" value={this.state.rightindexfingerpreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2009,7 +2189,7 @@ class App extends Component {
                         </td>
                         <td>
                           <center> <label id=" ">LEFT MIDDLE FINGER</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                            <input id="previewdesc" value={this.state.leftmidfingerpreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2027,7 +2207,7 @@ class App extends Component {
                         </td>
                         <td>
                           <center> <label id=" ">RIGHT MIDDLE FINGER </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                            <input id="previewdesc" value={this.state.rightmiddlefingerpreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2049,7 +2229,7 @@ class App extends Component {
                         </td>
                         <td>
                           <center> <label id=" ">LEFT RING FINGER </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                            <input id="previewdesc" value={this.state.leftringfingerpreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2067,7 +2247,7 @@ class App extends Component {
                         </td>
                         <td>
                           <center> <label id=" ">RIGHT RING FINGER </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                            <input id="previewdesc" value={this.state.rightringfingerpreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2089,7 +2269,7 @@ class App extends Component {
                         </td>
                         <td>
                           <center> <label id=" ">LEFT LITTLE FINGER </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                            <input id="previewdesc" value={this.state.leftlittlefingerpreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2107,19 +2287,19 @@ class App extends Component {
                         </td>
                         <td>
                           <center> <label id=" ">RIGHT LITTLE FINGER </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                            <input id="previewdesc" type="text" value={this.state.rightlittlefingerpreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
 
                   </td>
                 </tr>
-                   
+
                 <hr></hr>
                 {/* ******FINGER LEFT EDGES****** */}
                 <tr>
                   <th>LEFT FINGER LEFT EDGES</th>
-                  <th>RIGHT FINGER LEFT EDGES</th>
+                  <th>RIGHT FINGER RIGHT EDGES</th>
                 </tr>
                 <tr height="230px">
                   <td>
@@ -2129,12 +2309,12 @@ class App extends Component {
                           <img
                             src={this.state.leftthumbedge}
                             id="fingerprint"
-                            alt="Left Thumb Finger Edges"
+                            alt="Left Thumb Left Edges"
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">LEFT THUMB FINGER EDGES </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">LEFT THUMB LEFT EDGES </label>
+                            <input id="previewdesc" value={this.state.lefthumbleftedgepreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2147,12 +2327,12 @@ class App extends Component {
                           <img
                             src={this.state.rightthumbedge}
                             id="fingerprint"
-                            alt="Right Thumb Finger Edges"
+                            alt="Right Thumb Right Edges"
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">RIGHT THUMB FINGER EDGES </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">RIGHT THUMB Right EDGES </label>
+                            <input id="previewdesc" value={this.state.rightthumbrightedgepreview} type="text" placeholder="Description..."></input></center>
 
                         </td>
                       </tr>
@@ -2169,12 +2349,12 @@ class App extends Component {
                           <img
                             src={this.state.leftindexedge}
                             id="fingerprint"
-                            alt="Left Index Finger Edges"
+                            alt="Left Index Left Edges"
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">LEFT INDEX FINGER EDGES </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">LEFT INDEX Left EDGES </label>
+                            <input id="previewdesc" type="text" value={this.state.leftindexleftedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2187,12 +2367,12 @@ class App extends Component {
                           <img
                             src={this.state.rightindexedge}
                             id="fingerprint"
-                            alt="Right Index Finger Edges"
+                            alt="Right Index Right Edges"
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">RIGHT INDEX FINGER EDGES </label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">RIGHT INDEX RIGHT EDGES </label>
+                            <input id="previewdesc" value={this.state.rightindexrightedgepreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2209,12 +2389,12 @@ class App extends Component {
                           <img
                             src={this.state.leftmidedge}
                             id="fingerprint"
-                            alt="Left Mid Finger Edges"
+                            alt="Left Mid Left Edges"
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">LEFT MIDDLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">LEFT MIDDLE LEFT EDGES</label>
+                            <input id="previewdesc" value={this.state.leftmiddleleftedgepreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2227,12 +2407,12 @@ class App extends Component {
                           <img
                             src={this.state.rightmidedge}
                             id="fingerprint"
-                            alt="Right Mid Edges"
+                            alt="Right Mid Right Edges"
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">RIGHT MIDDLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">RIGHT MIDDLE RIGHT EDGES</label>
+                            <input id="previewdesc" value={this.state.rightmiddlerightedgepreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2249,12 +2429,12 @@ class App extends Component {
                           <img
                             src={this.state.leftringedge}
                             id="fingerprint"
-                            alt="Left Ring Finger Edges"
+                            alt="Left Ring Left Edges"
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">LEFT RING FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">LEFT RING LEFT EDGES</label>
+                            <input id="previewdesc" value={this.state.leftringleftedgepreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2267,12 +2447,12 @@ class App extends Component {
                           <img
                             src={this.state.rightringedge}
                             id="fingerprint"
-                            alt="Right Ring Finger Edges"
+                            alt="Right Ring Right Edges"
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">RIGHT RING FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">RIGHT RING Right EDGES</label>
+                            <input id="previewdesc" value={this.state.rightringrightedgepreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2289,12 +2469,12 @@ class App extends Component {
                           <img
                             src={this.state.leftlittleedge}
                             id="fingerprint"
-                            alt="Left Little Finger Edges"
+                            alt="Left Little Left Edges"
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">LEFT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">LEFT LITTLE LEFT EDGES</label>
+                            <input id="previewdesc" value={this.state.leftlittleleftedgepreview} type="text" placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2307,12 +2487,12 @@ class App extends Component {
                           <img
                             src={this.state.rightlittleedge}
                             id="fingerprint"
-                            alt="Right Little Finger Edges"
+                            alt="Right Little Right Edges"
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">RIGHT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">RIGHT LITTLE RIGHT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.rightlittlerightedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
 
@@ -2320,10 +2500,10 @@ class App extends Component {
 
                   </td>
                 </tr>
-{/* **************************FINGERS RIGHT EDGES*************************************** */}
+                {/* **************************FINGERS RIGHT EDGES*************************************** */}
                 <tr>
-                  <th>LEFT FINGER Right EDGES</th>
-                  <th>RIGHT FINGER RIGHT EDGES</th>
+                  <th>LEFT FINGER RIGHT EDGES</th>
+                  <th>RIGHT FINGER LEFT EDGES</th>
                 </tr>
                 <hr></hr>
 
@@ -2339,8 +2519,8 @@ class App extends Component {
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">LEFT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">LEFT LITTLE RIGHT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.leftlittlerightedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2357,8 +2537,8 @@ class App extends Component {
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">RIGHT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">RIGHT LITTLE LEFT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.rightlittleleftedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
 
@@ -2379,8 +2559,8 @@ class App extends Component {
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">LEFT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">LEFT INDEX RIGHT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.leftindexrightedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2397,8 +2577,8 @@ class App extends Component {
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">RIGHT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">RIGHT INDEX LEFT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.rightindexleftedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
 
@@ -2419,8 +2599,8 @@ class App extends Component {
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">LEFT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">LEFT MID RIGHT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.leftmidrightedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2437,8 +2617,8 @@ class App extends Component {
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">RIGHT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">RIGHT MID LEFT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.rightmidleftedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
 
@@ -2459,8 +2639,8 @@ class App extends Component {
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">LEFT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">LEFT RING RIGHT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.leftringrightedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2477,8 +2657,8 @@ class App extends Component {
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">RIGHT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">RIGHT RING LEFT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.rightringleftedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
 
@@ -2499,8 +2679,8 @@ class App extends Component {
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">LEFT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">LEFT THUMB RIGHT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.leftthumbrightedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
                     </table>
@@ -2517,8 +2697,8 @@ class App extends Component {
                           />
                         </td>
                         <td>
-                          <center> <label id=" ">RIGHT LITTLE FINGER EDGES</label>
-                            <input id="previewdesc" type="text" placeholder="Description..."></input></center>
+                          <center> <label id=" ">RIGHT THUMB LEFT EDGES</label>
+                            <input id="previewdesc" type="text" value={this.state.rightthumbleftedgepreview} placeholder="Description..."></input></center>
                         </td>
                       </tr>
 
@@ -2527,7 +2707,7 @@ class App extends Component {
                   </td>
                 </tr>
 
-                
+
               </table>
             </Tab>
           </TabNav>
