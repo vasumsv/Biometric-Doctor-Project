@@ -5,8 +5,10 @@ import React, { Component } from "react";
 import TabNav from './component/tabnav.js';
 import Tab from './component/tab.js';
 import './App.css';
+// import './server.js';
 import { BsFillPersonPlusFill } from "react-icons/bs";
- 
+import axios from 'axios';
+
 
 
 
@@ -18,10 +20,35 @@ var KeyFlag = "";
 var isGetSuccess = false;
 let thrownError = "";
 
- 
+
 
 
 class App extends Component {
+
+  state = {
+    data: "This is data",
+    num: 123,
+    boolean: true,
+  }
+
+  // save data to localStorage 
+  saveStateToLocalStorage = () => {
+    localStorage.setItem('state', JSON.stringify(this.state));
+  }
+
+  // Fetch data from local storage 
+  getStateFromLocalStorage = () => {
+    let data = localStorage.getItem('state');
+    if (data !== undefined) {
+      this.setState(JSON.parse(data));
+    }
+  }
+
+  componentDidMount() {
+    // Fetch data from local storage 
+    this.getStateFromLocalStorage();
+    this.getBiometrics();
+  }
 
 
   constructor(props) {
@@ -118,6 +145,7 @@ class App extends Component {
       previewgender: "",
       previewaddress: "",
       previewstate: "",
+      previewGrowth: "",
       // Right fingers right edges
       rightlittleleftedge: "",
       rightlittleleftedgetext: "",
@@ -129,13 +157,21 @@ class App extends Component {
       rightringleftedgetext: "",
       rightthumbleftedge: "",
       rightthumbleftedgetext: "",
-      selected: 'Home'
+      selected: 'Home',
+      biometrics: [],
     };
     // this.captureFile = this.captureFile.bind(this);
 
     // this.onSubmit = this.onSubmit.bind(this);
   }
-  
+
+  async getBiometrics() {
+    console.log("getBiometrics");
+    const response = await axios.get('http://localhost:5000/user/');
+    console.log(response.data);
+    this.setState({ biometrics: response.data });
+  }
+
   setSelected = (tab) => {
     this.setState({ selected: tab });
   }
@@ -143,10 +179,10 @@ class App extends Component {
     KeyFlag = "";
     return this.GetMFS100Client("info");
   }
-  
-   printDiv(divName){
+
+  printDiv(divName) {
     var printContents = document.getElementById(divName).innerHTML;
-    var previeword=document.getElementById(previeword);
+    var previeword = document.getElementById(previeword);
     var originalContents = document.body.innerHTML;
 
     document.body.innerHTML = printContents;
@@ -156,8 +192,6 @@ class App extends Component {
     document.body.innerHTML = originalContents;
 
   }
-
-
 
 
   GetMFS100KeyInfo(key) {
@@ -1247,8 +1281,32 @@ class App extends Component {
     this.state.rightthumbleftedgepreview = rightthumbleftedgedesc;
   }
 
+  setTypeOfGrowth(value) {
+    console.log(value);
+    this.setState({
+      previewGrowth: value
+    });
+  }
 
-  
+ async store() {
+    console.log("boooo")
+    const data = {
+      name: this.state.previewname,
+      age: this.state.previewage,
+      gender: this.state.previewgender,
+      address: this.state.previewaddress,
+      state: this.state.previewstate,
+      typeofgrowth: this.state.previewGrowth
+    };
+    console.log(data)
+    const response = await axios.post('http://localhost:5000/user', data);
+    console.log(response);
+  }
+
+  //sample
+  // const response = await axios.get('http://localhost:5000/user');
+  // setState({ user: response.data });
+
   render() {
     return (
       <div className="App">
@@ -1275,7 +1333,6 @@ class App extends Component {
                 </tr>
               </table>
 
-               
 
               <div id="table-wrapper">
                 <div id="table-scroll">
@@ -1285,65 +1342,38 @@ class App extends Component {
                         <th>ID</th>
                         <th>Name</th>
                         <th>Age</th>
+                        <td>Gender</td>
+                        <td>Address</td>
                         <th>State</th>
                         <th>Type of Growth Pattern</th>
                       </tr>
                     </thead>
                     <tbody>
+                      {this.state.biometrics.map(user => {
+                        return (
                       <tr>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
+                        <td>{user.id}</td>
+                        <td>{user.name}</td>
+                        <td>{user.age}</td>
+                        <td>{user.gender}</td>
+                        <td>{user.address}</td>
+                        <td>{user.state}</td>
+                        <td>{user.typeofgrowth}</td>
                       </tr>
-                      <tr>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                      </tr>
-                      <tr>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                      </tr>
-                      <tr>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                      </tr>
-                      <tr>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                      </tr>
-                      <tr>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                        <td>Data Not Available</td>
-                      </tr>
+                        )
+                      })}
                     </tbody>
                   </table>
-                  
+
                 </div>
               </div>
-              <button id="addparticipant">Add Participant&nbsp;&nbsp;<BsFillPersonPlusFill /></button>
+              {/* <button id="addparticipant">Add Participant&nbsp;&nbsp;<BsFillPersonPlusFill /></button> */}
             </Tab>
 
             {/* *************************************************PERSONAL INFORMATION**************************************************************** */}
 
             <Tab isSelected={this.state.selected === 'Personal Information'}>
-              
+
               <form>
                 <br></br><br></br>
                 <table bgcolor="white" border="0" cellpadding="10" cellspacing="0" id="header-fixed" width="100%" class="personaltable">
@@ -1505,7 +1535,7 @@ class App extends Component {
                         alt="Left Thumb Finger"
                       /></div>
                     &nbsp;
-                    <center> <input  type="text" value={this.state.leftthumbtext} /></center>
+                    <center> <input type="text" value={this.state.leftthumbtext} /></center>
                     <br></br>
                     <input
                       type="button"
@@ -2059,690 +2089,692 @@ class App extends Component {
 
 
               </table>
+              <br></br><br></br>
               <input
                 type="button"
                 name="save"
                 onClick={() => this.saveright()}
                 value="Save Left Fingerprints"
-              ></input><br></br>
+              ></input><br></br><br></br><br></br>
             </Tab>
 
             {/* ********************** Preview ****************************** */}
 
             <Tab isSelected={this.state.selected === 'Preview'} >
               <div id='printMe'>
-              <br></br>
-              {/* <button onclick="printDiv('printMe')">Print </button> */}
-              <button onClick={() => this.printDiv('printMe')}>Print </button>
- 
-              <h2 id="previeword">PREVIEW</h2><br></br>
-              <br></br>
-              <center>
-                <table width="90%" >
+                <br></br>
+                {/* <button onclick="printDiv('printMe')">Print </button> */}
+                <button id="printpdf" onClick={() => this.printDiv('printMe')}>Print </button>
+
+                <h2 id="previeword">PREVIEW</h2><br></br>
+                <br></br>
+                <center>
+                  <table width="90%" >
+                    <tr>
+                      <td>
+
+                        <label id="">Name </label>
+                        <input type="text" name="previewname" value={this.state.previewname} class="previewtextfield" id="previewname" readonly />
+                      </td>
+
+                      <td>
+                        <label id=" ">Age </label>
+                        <input type="text" class="previewtextfield" value={this.state.previewage} id="previewage" />
+                      </td>
+
+                      <td>
+                        <label id=" ">Gender </label>
+                        <input type="text" class="previewtextfield" value={this.state.previewgender} id="previewgender" />
+                      </td>
+
+                      <td>
+                        <label id=" ">Address </label>
+                        <input type="text" class="previewtextfield" value={this.state.previewaddress} id="previewaddress" />
+                      </td>
+
+
+                      <td>
+                        <label id=" ">State </label>
+                        <input type="text" class="previewtextfield" value={this.state.previewstate} id="previewstate" />
+                      </td>
+
+
+                    </tr>
+                    <tr>
+                      <td>
+                        <label id=" ">Type of Growth </label>
+                        <select id="tfg" name="tfg" onChange={(e) => this.setTypeOfGrowth(e.target.value)}>
+                          <option value="none">Select</option>
+                          <option value="Average">Average</option>
+                          <option value="Horizontal">Horizontal</option>
+                          <option value="Vertical">Vertical</option>
+                        </select>
+                      </td>
+                    </tr>
+                  </table>
+                </center>
+                <input type="button" value="Submit" onClick={this.store()} ></input>
+                 <br></br>
+                <h3>LEFT FINGERPRINTS</h3> <br></br>
+                <hr></hr>
+                <table width="100%" border="0" >
                   <tr>
-                    <td>
-
-                      <label id="">Name </label>
-                      <input type="text" name="previewname" value={this.state.previewname} class="previewtextfield" id="previewname" readonly />
-                    </td>
-
-                    <td>
-                      <label id=" ">Age </label>
-                      <input type="text" class="previewtextfield" value={this.state.previewage} id="previewage" />
-                    </td>
-
-                    <td>
-                      <label id=" ">Gender </label>
-                      <input type="text" class="previewtextfield" value={this.state.previewgender} id="previewgender" />
-                    </td>
-
-                    <td>
-                      <label id=" ">Address </label>
-                      <input type="text" class="previewtextfield" value={this.state.previewaddress} id="previewaddress" />
-                    </td>
-
-
-                    <td>
-                      <label id=" ">State </label>
-                      <input type="text" class="previewtextfield" value={this.state.previewstate} id="previewstate" />
-                    </td>
-
-
+                    <th>LEFT FINGERS</th>
+                    <th>RIGHT FINGERS</th>
                   </tr>
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftthumbfinger}
+                              id="fingerprint"
+                              alt="Left Thumb Finger"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT THUMB FINGER </label>
+                              <input id="previewdesc" value={this.state.leftthumbfingerpreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.rightthumbfinger}
+                              id="fingerprint"
+                              alt="Right Thumb finger"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT THUMB FINGER </label>
+                              <input id="previewdesc" value={this.state.rightthumbfingerpreview} type="text" placeholder="Description..."></input></center>
+
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftindexfinger}
+                              id="fingerprint"
+                              alt="Left Index Finger"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT INDEX FINGER </label>
+                              <input id="previewdesc" value={this.state.leftindexfingerpreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.rightindexfinger}
+                              id="fingerprint"
+                              alt="Right Index Finger"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT INDEX FINGER </label>
+                              <input id="previewdesc" type="text" value={this.state.rightindexfingerpreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftmidfinger}
+                              id="fingerprint"
+                              alt="Left Mid Finger"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT MIDDLE FINGER</label>
+                              <input id="previewdesc" value={this.state.leftmidfingerpreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.rightmidfinger}
+                              id="fingerprint"
+                              alt="Right Mid Finger"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT MIDDLE FINGER </label>
+                              <input id="previewdesc" value={this.state.rightmiddlefingerpreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftringfinger}
+                              id="fingerprint"
+                              alt="Left Ring Finger"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT RING FINGER </label>
+                              <input id="previewdesc" value={this.state.leftringfingerpreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.rightringfinger}
+                              id="fingerprint"
+                              alt="Right Ring Finger"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT RING FINGER </label>
+                              <input id="previewdesc" value={this.state.rightringfingerpreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftlittlefinger}
+                              id="fingerprint"
+                              alt="Left Little Finger"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT LITTLE FINGER </label>
+                              <input id="previewdesc" value={this.state.leftlittlefingerpreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr height="150px">
+                          <td>
+                            <img
+                              src={this.state.rightlittlefinger}
+                              id="fingerprint"
+                              alt="Right Little Finger"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT LITTLE FINGER </label>
+                              <input id="previewdesc" type="text" value={this.state.rightlittlefingerpreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+
+                  <hr></hr>
+                  {/* ******FINGER LEFT EDGES****** */}
                   <tr>
+                    <th>LEFT FINGER LEFT EDGES</th>
+                    <th>RIGHT FINGER RIGHT EDGES</th>
+                  </tr>
+                  <tr height="230px">
                     <td>
-                      <label id=" ">Type of Growth </label>
-                      <select id="tfg" name="tfg">
-                        <option value="none">Select</option>
-                        <option value="Male">Average</option>
-                        <option value="Female">Horizonta</option>
-                        <option value="Other">Vertical</option>
-                      </select>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftthumbedge}
+                              id="fingerprint"
+                              alt="Left Thumb Left Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT THUMB LEFT EDGES </label>
+                              <input id="previewdesc" value={this.state.lefthumbleftedgepreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.rightthumbedge}
+                              id="fingerprint"
+                              alt="Right Thumb Right Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT THUMB Right EDGES </label>
+                              <input id="previewdesc" value={this.state.rightthumbrightedgepreview} type="text" placeholder="Description..."></input></center>
+
+                          </td>
+                        </tr>
+                      </table>
+
                     </td>
                   </tr>
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftindexedge}
+                              id="fingerprint"
+                              alt="Left Index Left Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT INDEX Left EDGES </label>
+                              <input id="previewdesc" type="text" value={this.state.leftindexleftedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.rightindexedge}
+                              id="fingerprint"
+                              alt="Right Index Right Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT INDEX RIGHT EDGES </label>
+                              <input id="previewdesc" value={this.state.rightindexrightedgepreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftmidedge}
+                              id="fingerprint"
+                              alt="Left Mid Left Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT MIDDLE LEFT EDGES</label>
+                              <input id="previewdesc" value={this.state.leftmiddleleftedgepreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.rightmidedge}
+                              id="fingerprint"
+                              alt="Right Mid Right Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT MIDDLE RIGHT EDGES</label>
+                              <input id="previewdesc" value={this.state.rightmiddlerightedgepreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftringedge}
+                              id="fingerprint"
+                              alt="Left Ring Left Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT RING LEFT EDGES</label>
+                              <input id="previewdesc" value={this.state.leftringleftedgepreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.rightringedge}
+                              id="fingerprint"
+                              alt="Right Ring Right Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT RING Right EDGES</label>
+                              <input id="previewdesc" value={this.state.rightringrightedgepreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                  </tr>
+
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftlittleedge}
+                              id="fingerprint"
+                              alt="Left Little Left Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT LITTLE LEFT EDGES</label>
+                              <input id="previewdesc" value={this.state.leftlittleleftedgepreview} type="text" placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr height="150px">
+                          <td>
+                            <img
+                              src={this.state.rightlittleedge}
+                              id="fingerprint"
+                              alt="Right Little Right Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT LITTLE RIGHT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.rightlittlerightedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+
+                      </table>
+
+                    </td>
+                  </tr>
+                  {/* **************************FINGERS RIGHT EDGES*************************************** */}
+                  <tr>
+                    <th>LEFT FINGER RIGHT EDGES</th>
+                    <th>RIGHT FINGER LEFT EDGES</th>
+                  </tr>
+                  <hr></hr>
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftlittlerightedge}
+                              id="fingerprint"
+                              alt="Left Little Finger Right Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT LITTLE RIGHT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.leftlittlerightedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr height="150px">
+                          <td>
+                            <img
+                              src={this.state.rightlittleleftedge}
+                              id="fingerprint"
+                              alt="Right Little Left Edge"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT LITTLE LEFT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.rightlittleleftedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+
+                      </table>
+
+                    </td>
+                  </tr>
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftindexrightedge}
+                              id="fingerprint"
+                              alt="Left index Finger Right Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT INDEX RIGHT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.leftindexrightedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr height="150px">
+                          <td>
+                            <img
+                              src={this.state.rightindexleftedge}
+                              id="fingerprint"
+                              alt="Right Index Left Edge"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT INDEX LEFT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.rightindexleftedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+
+                      </table>
+
+                    </td>
+                  </tr>
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftmidrightedge}
+                              id="fingerprint"
+                              alt="Left mid Finger Right Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT MID RIGHT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.leftmidrightedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr height="150px">
+                          <td>
+                            <img
+                              src={this.state.rightmidleftedge}
+                              id="fingerprint"
+                              alt="Right Middle Left Edge"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT MID LEFT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.rightmidleftedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+
+                      </table>
+
+                    </td>
+                  </tr>
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftringrightedge}
+                              id="fingerprint"
+                              alt="Left Ring Finger Right Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT RING RIGHT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.leftringrightedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr height="150px">
+                          <td>
+                            <img
+                              src={this.state.rightringleftedge}
+                              id="fingerprint"
+                              alt="Right Ring Left Edge"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT RING LEFT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.rightringleftedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+
+                      </table>
+
+                    </td>
+                  </tr>
+
+                  <tr height="230px">
+                    <td>
+                      <table width="100%" >
+                        <tr>
+                          <td>
+                            <img
+                              src={this.state.leftthumbrightedge}
+                              id="fingerprint"
+                              alt="Left Thumb Finger Right Edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">LEFT THUMB RIGHT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.leftthumbrightedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </td>
+                    <td>
+                      <table width="100%" >
+                        <tr height="150px">
+                          <td>
+                            <img
+                              src={this.state.rightthumbleftedge}
+                              id="fingerprint"
+                              alt="Right thumb left edges"
+                            />
+                          </td>
+                          <td>
+                            <center> <label id=" ">RIGHT THUMB LEFT EDGES</label>
+                              <input id="previewdesc" type="text" value={this.state.rightthumbleftedgepreview} placeholder="Description..."></input></center>
+                          </td>
+                        </tr>
+
+                      </table>
+
+                    </td>
+                  </tr>
+
+
                 </table>
-              </center>
-              <br></br>
-              <h3>LEFT FINGERPRINTS</h3> <br></br>
-              <hr></hr>
-              <table width="100%" border="0" >
-                <tr>
-                  <th>LEFT FINGERS</th>
-                  <th>RIGHT FINGERS</th>
-                </tr>
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftthumbfinger}
-                            id="fingerprint"
-                            alt="Left Thumb Finger"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT THUMB FINGER </label>
-                            <input id="previewdesc" value={this.state.leftthumbfingerpreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.rightthumbfinger}
-                            id="fingerprint"
-                            alt="Right Thumb finger"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT THUMB FINGER </label>
-                            <input id="previewdesc" value={this.state.rightthumbfingerpreview} type="text" placeholder="Description..."></input></center>
-
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                </tr>
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftindexfinger}
-                            id="fingerprint"
-                            alt="Left Index Finger"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT INDEX FINGER </label>
-                            <input id="previewdesc" value={this.state.leftindexfingerpreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.rightindexfinger}
-                            id="fingerprint"
-                            alt="Right Index Finger"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT INDEX FINGER </label>
-                            <input id="previewdesc" type="text" value={this.state.rightindexfingerpreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                </tr>
-
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftmidfinger}
-                            id="fingerprint"
-                            alt="Left Mid Finger"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT MIDDLE FINGER</label>
-                            <input id="previewdesc" value={this.state.leftmidfingerpreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.rightmidfinger}
-                            id="fingerprint"
-                            alt="Right Mid Finger"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT MIDDLE FINGER </label>
-                            <input id="previewdesc" value={this.state.rightmiddlefingerpreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                </tr>
-
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftringfinger}
-                            id="fingerprint"
-                            alt="Left Ring Finger"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT RING FINGER </label>
-                            <input id="previewdesc" value={this.state.leftringfingerpreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.rightringfinger}
-                            id="fingerprint"
-                            alt="Right Ring Finger"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT RING FINGER </label>
-                            <input id="previewdesc" value={this.state.rightringfingerpreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                </tr>
-
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftlittlefinger}
-                            id="fingerprint"
-                            alt="Left Little Finger"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT LITTLE FINGER </label>
-                            <input id="previewdesc" value={this.state.leftlittlefingerpreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr height="150px">
-                        <td>
-                          <img
-                            src={this.state.rightlittlefinger}
-                            id="fingerprint"
-                            alt="Right Little Finger"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT LITTLE FINGER </label>
-                            <input id="previewdesc" type="text" value={this.state.rightlittlefingerpreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                </tr>
-
-                <hr></hr>
-                {/* ******FINGER LEFT EDGES****** */}
-                <tr>
-                  <th>LEFT FINGER LEFT EDGES</th>
-                  <th>RIGHT FINGER RIGHT EDGES</th>
-                </tr>
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftthumbedge}
-                            id="fingerprint"
-                            alt="Left Thumb Left Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT THUMB LEFT EDGES </label>
-                            <input id="previewdesc" value={this.state.lefthumbleftedgepreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.rightthumbedge}
-                            id="fingerprint"
-                            alt="Right Thumb Right Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT THUMB Right EDGES </label>
-                            <input id="previewdesc" value={this.state.rightthumbrightedgepreview} type="text" placeholder="Description..."></input></center>
-
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                </tr>
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftindexedge}
-                            id="fingerprint"
-                            alt="Left Index Left Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT INDEX Left EDGES </label>
-                            <input id="previewdesc" type="text" value={this.state.leftindexleftedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.rightindexedge}
-                            id="fingerprint"
-                            alt="Right Index Right Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT INDEX RIGHT EDGES </label>
-                            <input id="previewdesc" value={this.state.rightindexrightedgepreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                </tr>
-
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftmidedge}
-                            id="fingerprint"
-                            alt="Left Mid Left Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT MIDDLE LEFT EDGES</label>
-                            <input id="previewdesc" value={this.state.leftmiddleleftedgepreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.rightmidedge}
-                            id="fingerprint"
-                            alt="Right Mid Right Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT MIDDLE RIGHT EDGES</label>
-                            <input id="previewdesc" value={this.state.rightmiddlerightedgepreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                </tr>
-
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftringedge}
-                            id="fingerprint"
-                            alt="Left Ring Left Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT RING LEFT EDGES</label>
-                            <input id="previewdesc" value={this.state.leftringleftedgepreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.rightringedge}
-                            id="fingerprint"
-                            alt="Right Ring Right Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT RING Right EDGES</label>
-                            <input id="previewdesc" value={this.state.rightringrightedgepreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                </tr>
-
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftlittleedge}
-                            id="fingerprint"
-                            alt="Left Little Left Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT LITTLE LEFT EDGES</label>
-                            <input id="previewdesc" value={this.state.leftlittleleftedgepreview} type="text" placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr height="150px">
-                        <td>
-                          <img
-                            src={this.state.rightlittleedge}
-                            id="fingerprint"
-                            alt="Right Little Right Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT LITTLE RIGHT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.rightlittlerightedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-
-                    </table>
-
-                  </td>
-                </tr>
-                {/* **************************FINGERS RIGHT EDGES*************************************** */}
-                <tr>
-                  <th>LEFT FINGER RIGHT EDGES</th>
-                  <th>RIGHT FINGER LEFT EDGES</th>
-                </tr>
-                <hr></hr>
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftlittlerightedge}
-                            id="fingerprint"
-                            alt="Left Little Finger Right Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT LITTLE RIGHT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.leftlittlerightedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr height="150px">
-                        <td>
-                          <img
-                            src={this.state.rightlittleleftedge}
-                            id="fingerprint"
-                            alt="Right Little Left Edge"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT LITTLE LEFT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.rightlittleleftedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-
-                    </table>
-
-                  </td>
-                </tr>
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftindexrightedge}
-                            id="fingerprint"
-                            alt="Left index Finger Right Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT INDEX RIGHT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.leftindexrightedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr height="150px">
-                        <td>
-                          <img
-                            src={this.state.rightindexleftedge}
-                            id="fingerprint"
-                            alt="Right Index Left Edge"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT INDEX LEFT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.rightindexleftedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-
-                    </table>
-
-                  </td>
-                </tr>
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftmidrightedge}
-                            id="fingerprint"
-                            alt="Left mid Finger Right Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT MID RIGHT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.leftmidrightedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr height="150px">
-                        <td>
-                          <img
-                            src={this.state.rightmidleftedge}
-                            id="fingerprint"
-                            alt="Right Middle Left Edge"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT MID LEFT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.rightmidleftedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-
-                    </table>
-
-                  </td>
-                </tr>
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftringrightedge}
-                            id="fingerprint"
-                            alt="Left Ring Finger Right Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT RING RIGHT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.leftringrightedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr height="150px">
-                        <td>
-                          <img
-                            src={this.state.rightringleftedge}
-                            id="fingerprint"
-                            alt="Right Ring Left Edge"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT RING LEFT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.rightringleftedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-
-                    </table>
-
-                  </td>
-                </tr>
-
-                <tr height="230px">
-                  <td>
-                    <table width="100%" >
-                      <tr>
-                        <td>
-                          <img
-                            src={this.state.leftthumbrightedge}
-                            id="fingerprint"
-                            alt="Left Thumb Finger Right Edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">LEFT THUMB RIGHT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.leftthumbrightedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-                    </table>
-
-                  </td>
-                  <td>
-                    <table width="100%" >
-                      <tr height="150px">
-                        <td>
-                          <img
-                            src={this.state.rightthumbleftedge}
-                            id="fingerprint"
-                            alt="Right thumb left edges"
-                          />
-                        </td>
-                        <td>
-                          <center> <label id=" ">RIGHT THUMB LEFT EDGES</label>
-                            <input id="previewdesc" type="text" value={this.state.rightthumbleftedgepreview} placeholder="Description..."></input></center>
-                        </td>
-                      </tr>
-
-                    </table>
-
-                  </td>
-                </tr>
-
-
-              </table>
               </div>
             </Tab>
           </TabNav>

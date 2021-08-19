@@ -212,6 +212,15 @@ input[type="text"] {
   margin-left: 65px;
    
 }
+
+#printpdf{
+  float:right;
+  padding: 10px;
+  margin-right: 25px;
+  color:black;
+  font-size:17px;
+
+}
 #heading{
 color:rgb(0, 99, 180);
 }
