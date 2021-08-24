@@ -172,6 +172,8 @@ class App extends Component {
     this.setState({ biometrics: response.data });
   }
 
+
+
   setSelected = (tab) => {
     this.setState({ selected: tab });
   }
@@ -1146,27 +1148,28 @@ class App extends Component {
     this.state.previewgender = gender;
     this.state.previewaddress = address;
     this.state.previewstate = state;
+    window.alert(name + " Details Saved")
   }
 
-  detailsnext() {
-    var name = document.getElementById("name").value;
-    console.log(name);
-    var age = document.getElementById("age").value;
-    console.log(age);
-    var gender = document.getElementById("gender").value;
-    console.log(gender);
-    var address = document.getElementById("address").value;
-    console.log(address);
-    var state = document.getElementById("state").value;
-    console.log(state);
+  // detailsnext() {
+  //   var name = document.getElementById("name").value;
+  //   console.log(name);
+  //   var age = document.getElementById("age").value;
+  //   console.log(age);
+  //   var gender = document.getElementById("gender").value;
+  //   console.log(gender);
+  //   var address = document.getElementById("address").value;
+  //   console.log(address);
+  //   var state = document.getElementById("state").value;
+  //   console.log(state);
 
 
-    this.state.previewname = name;
-    this.state.previewage = age;
-    this.state.previewgender = gender;
-    this.state.previewaddress = address;
-    this.state.previewstate = state;
-  }
+  //   this.state.previewname = name;
+  //   this.state.previewage = age;
+  //   this.state.previewgender = gender;
+  //   this.state.previewaddress = address;
+  //   this.state.previewstate = state;
+  // }
 
   saveleft() {
     var leftlittlefingerdesc = document.getElementById("leftlittlefingerdesc").value;
@@ -1288,7 +1291,7 @@ class App extends Component {
     });
   }
 
- async store() {
+  async store() {
     console.log("boooo")
     const data = {
       name: this.state.previewname,
@@ -1301,34 +1304,77 @@ class App extends Component {
     console.log(data)
     const response = await axios.post('http://localhost:5000/user', data);
     console.log(response);
+    window.alert(this.state.previewname + " details has been saved in database");
   }
 
-  //sample
-  // const response = await axios.get('http://localhost:5000/user');
-  // setState({ user: response.data });
+  async searchFilter() {
+    console.log("caleed");
+    var searchFilterHead = document.getElementById("searchbydetails");
+    var searchFilterValue = document.getElementById("search-filter");
+
+    console.log(searchFilterHead.value);
+
+    console.log("meeee", searchFilterValue.value);
+
+    var filterHead = searchFilterHead.value;
+    var filterValue = searchFilterValue.value;
+
+    const myData = {
+      filterHead: filterHead,
+      filterValue: filterValue
+    }
+
+    console.log("myysgsy");
+
+    // console.log(filters.filterHead);
+    // console.log(filters.filterValue);
+
+    const response = await axios.post('http://localhost:5000/filter', myData);
+
+    console.log("ffffffffffffk", response.data);
+
+    this.setState({ biometrics: response.data });
+
+    // this.getFilteredBiometrics(filters);
+    // const response = await axios.get('http://localhost:5000/user', data);
+  }
+
+
+
+
 
   render() {
     return (
       <div className="App">
         <div className="App mt-4">
-          <h1 id="heading">BIOMETRIC PROJECT</h1><br></br>
+          <div id="header">
+            <img src="batlogo.png" width="130px" height="100px" id="logo"></img>
+            <h1 id="heading">THE DARK KNIGHT CAPTURE</h1><br></br>
+          </div>
+
           <TabNav tabs={['Home', 'Personal Information', 'Left Biometrics', 'Right Biometrics', 'Preview']} selected={this.state.selected} setSelected={this.setSelected}>
             <Tab isSelected={this.state.selected === 'Home'}>
               <br></br><br></br>
               <table class="search">
                 <tr>
                   <td>
-                    <label id="labeldes">Search </label>
+                    <label id="labeldes" onClick={() => this.searchFilter()}>Search </label>
                   </td>
                   <td>
                     <select id="searchbydetails" name="search">
                       <option value="none">Select</option>
                       <option value="name">Name</option>
                       <option value="age">Age</option>
-                      <option value="sex">Sex</option>
+                      <option value="gender">Sex</option>
                       <option value="state">State</option>
-                      <option value="growth">Type of Growth Pattern</option>
+                      <option value="typeofgrowth">Type of Growth Pattern</option>
                     </select>
+                  </td>
+                  <td>
+                    <input type="text" placeholder="Search Value" id="search-filter" />
+                  </td>
+                  <td>
+                    {/* <input type="button" value="Search" onClick={() => this.search()}></input> */}
                   </td>
                 </tr>
               </table>
@@ -1342,8 +1388,8 @@ class App extends Component {
                         <th>ID</th>
                         <th>Name</th>
                         <th>Age</th>
-                        <td>Gender</td>
-                        <td>Address</td>
+                        <th>Gender</th>
+                        <th>Address</th>
                         <th>State</th>
                         <th>Type of Growth Pattern</th>
                       </tr>
@@ -1351,15 +1397,15 @@ class App extends Component {
                     <tbody>
                       {this.state.biometrics.map(user => {
                         return (
-                      <tr>
-                        <td>{user.id}</td>
-                        <td>{user.name}</td>
-                        <td>{user.age}</td>
-                        <td>{user.gender}</td>
-                        <td>{user.address}</td>
-                        <td>{user.state}</td>
-                        <td>{user.typeofgrowth}</td>
-                      </tr>
+                          <tr>
+                            <td>{user.id}</td>
+                            <td>{user.name}</td>
+                            <td>{user.age}</td>
+                            <td>{user.gender}</td>
+                            <td>{user.address}</td>
+                            <td>{user.state}</td>
+                            <td>{user.typeofgrowth}</td>
+                          </tr>
                         )
                       })}
                     </tbody>
@@ -2094,7 +2140,7 @@ class App extends Component {
                 type="button"
                 name="save"
                 onClick={() => this.saveright()}
-                value="Save Left Fingerprints"
+                value="Save Right Fingerprints"
               ></input><br></br><br></br><br></br>
             </Tab>
 
@@ -2153,8 +2199,8 @@ class App extends Component {
                     </tr>
                   </table>
                 </center>
-                <input type="button" value="Submit" onClick={this.store()} ></input>
-                 <br></br>
+                <input type="button" value="Submit" onClick={() => this.store()} ></input>
+                <br></br>
                 <h3>LEFT FINGERPRINTS</h3> <br></br>
                 <hr></hr>
                 <table width="100%" border="0" >
@@ -2788,4 +2834,3 @@ class App extends Component {
 }
 
 export default App;
-
