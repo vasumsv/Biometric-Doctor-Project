@@ -13,7 +13,13 @@ require('./config/mysql.js')
 
 //routes
 const userRoute = require('./routes/user.js')
+
+const filterRoute = require('./routes/filters.js');
+
 app.use('/user', userRoute)
+app.use('/filter', filterRoute)
+
+
 
 app.listen(port, () => {
     console.log(`Server is up and running at localhost:${port}`)

@@ -31,4 +31,18 @@ router.get('/', (req, res) => {
     }
 })
 
+// router.get('/', (req, res) => {
+//     try {
+//         const sql = `SELECT * FROM biometric`
+//         connection.query(sql, (err, rows) => {
+//             if (err) {
+//                 res.status(400).send(err)
+//             }
+//             res.status(200).send(rows)
+//         })
+//     } catch (error) {
+//         res.status(400).send(error)
+//     }
+// })
+
 module.exports = router
